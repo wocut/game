@@ -1,0 +1,36 @@
+// 创建一个Matter.js世界实例  
+var world = Matter.World.create();  
+  
+// 创建一个Matter.js渲染器实例  
+var renderer = Matter.Renderer.create();  
+  
+// 设置渲染器的视口和世界实例  
+renderer.view = document.createElement('canvas');  
+renderer.world = world;  
+  
+// 添加一个重力场  
+var gravity = Matter.Force.create({  
+  strength: -0.1,  
+  vector: { x: 0, y: -1 }  
+});  
+Matter.World.addForce(world, gravity);  
+  
+// 创建一个矩形物体  
+var rectangle = Matter.Bodies.rectangle(100, 100, 50, 50);  
+Matter.World.addBody(world, rectangle);  
+  
+// 创建一个圆形物体  
+var circle = Matter.Bodies.circle(100, 200, 30);  
+Matter.World.addBody(world, circle);  
+  
+// 设置渲染器的帧率和时间步长  
+renderer.fps = 60;  
+renderer.step(1/60);  
+  
+// 渲染世界和物体的动态效果  
+function render() {  
+  Matter.Engine.update(world);  
+  renderer.render(world);  
+  requestAnimationFrame(render);  
+}  
+render();
